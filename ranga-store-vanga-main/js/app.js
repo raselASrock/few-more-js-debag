@@ -1,10 +1,10 @@
-const arr = [];
+let arr = [];
 
 const loadProducts = (url) => {
    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-         arr.push(data);
+         arr = data;
          showProducts(data);
       });
 };
@@ -60,7 +60,7 @@ const showProductDetails = (product_id) => {
 };
 
 const showProductDetailsInModal = (product_details) => {
-   console.log(product_details.title);
+   // console.log(product_details.title);
    setInnerText('exampleModalLabel', product_details.title);
    setInnerText('productId', product_details.id);
    setInnerText('modal_body', product_details.description);
@@ -83,13 +83,14 @@ const updatePrice = (id, value) => {
 
 // set innerText function
 const setInnerText = (id, value) => {
-   if(typeof value === "number"){
-      value = Math.round(value)
-   }
-   else{
+   // if(typeof value === "number"){
+   //    value = Math.round(value)
+   // }
+   // else{
       document.getElementById(id).innerText = value;
-   }
-   
+   // }
+   // console.log(id, value);
+   // console.log(document.getElementById(id));
 };
 
 // update delivery charge and total Tax
@@ -97,15 +98,15 @@ const updateTaxAndCharge = () => {
    const priceConverted = getInputValue('price');
    if (priceConverted > 500) {
       setInnerText('delivery-charge', 60);
-      setInnerText('total-tax', priceConverted * 0.4);
+      setInnerText('total-tax', (priceConverted * 0.4).toFixed(2));
    }
    else if (priceConverted > 400) {
       setInnerText('delivery-charge', 50);
-      setInnerText('total-tax', priceConverted * 0.3);
+      setInnerText('total-tax', (priceConverted * 0.3).toFixed(2));
    }
    else if (priceConverted > 200) {
       setInnerText('delivery-charge', 30);
-      setInnerText('total-tax', priceConverted * 0.2);
+      setInnerText('total-tax', (priceConverted * 0.2).toFixed(2));
    }
    else{
       setInnerText('delivery-charge', 20);
@@ -124,10 +125,11 @@ const updateTotal = () => {
 // search by category
 document.getElementById("search-btn").addEventListener("click", function () {
    const inputField = document.getElementById("input-value").value;
-   const searchedProduct = arr[0].filter((p) =>
+   const searchedProduct = arr.filter((p) =>
      p.title.toLowerCase().includes(inputField.toLowerCase())
    );
    showProducts(searchedProduct);
  });
 
-
+ let str = "";
+ console.log(str);
